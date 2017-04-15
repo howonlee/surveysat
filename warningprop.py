@@ -11,14 +11,14 @@ def initialize_warnings(clauses):
         warnings.append(npr.randint(2, size=len(clause)))
     return warnings
 
-def local_fields(warnings):
+def get_local_fields(warnings):
     # sum of the warning for all adjacenty clauses wrt a variable
 ################
 ################
 ################
     pass
 
-def contradiction_numbers(warnings):
+def get_contradiction_numbers(warnings):
 # a measure if contradicting warnings impinge upon a variable
 # if any contradiction num is >0, it's UNSAT
 ################
@@ -83,11 +83,23 @@ def warning_propagation(clauses,
     return False
 
 def warning_decimation(clauses, variables):
-###########################
-###########################
-###########################
-###########################
-    pass
+    current_satisfying = {}
+    for member in variables:
+        warnings = warning_propagation(clauses, variables)
+        if not warnings:
+            return False
+        local_fields = get_local_fields(warnings)
+        contradiction_numbers = get_contradiction_numbers(warnings)
+        if 1 in contradiction_numbers:
+            return False
+        ##################3
+        ##################3
+        ##################3
+        ##################3
+        new_clauses = NotImplementedError()
+        new_variables = NotImplementedError()
+        current_satisfying[NotImplemented] = NotImplementedError()
+    return current_satisfying
 
 if __name__ == "__main__":
     assert len(sys.argv) == 2
