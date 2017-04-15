@@ -11,20 +11,17 @@ def initialize_warnings(clauses):
         warnings.append(npr.randint(2, size=len(clause)))
     return warnings
 
-def get_local_fields(warnings):
-    # sum of the warning for all adjacenty clauses wrt a variable
-################
-################
-################
-    pass
+def get_local_fields(warnings, num_vars):
+    # sum of the warning for all adjacent clauses wrt a variable
+    # ... is that correct?
+    local_fields = []
+    NotImplementedError() ###############
 
 def get_contradiction_numbers(warnings):
-# a measure if contradicting warnings impinge upon a variable
-# if any contradiction num is >0, it's UNSAT
-################
-################
-################
-    pass
+    contradiction_numbers = []
+    for warning in warnings:
+        NotImplementedError() ###############
+    return contradiction_numbers
 
 def check_convergence(new_warnings, warnings):
     for warning_idx, warning in enumerate(warnings):
@@ -48,19 +45,14 @@ def warning_update(clauses, variables, warnings, num_warnings=40):
     """
     num_warnings is the number of warnings to impinge upon
     """
-    """
-    compute the cavity field
-    """
-    """
-    compute the warning now, from the cavity fields only
-    """
+    cavity_fields = []
+    for variable_idx, variable in enumerate(variables):
+        curr_cavity_field = NotImplementedError()
+        cavity_fields.append(curr_cavity_field)
     for warning_idx in xrange(len(warnings)):
-        warnings[warning_idx] = npr.randint(2, size=len(warnings[warning_idx]))
+        curr_warning = NotImplementedError()
+        warnings[warning_idx] = curr_warning
     return warnings
-##########################
-##########################
-##########################
-##########################
 
 def warning_propagation(clauses,
                         variables,
