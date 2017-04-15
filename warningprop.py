@@ -12,12 +12,15 @@ def initialize_warnings(clauses):
     return warnings
 
 def local_fields(warnings):
+    # sum of the warning for all adjacenty clauses wrt a variable
 ################
 ################
 ################
     pass
 
 def contradiction_numbers(warnings):
+# a measure if contradicting warnings impinge upon a variable
+# if any contradiction num is >0, it's UNSAT
 ################
 ################
 ################
@@ -49,7 +52,7 @@ def warning_update(clauses, variables, warnings, num_warnings=40):
     compute the cavity field
     """
     """
-    compute the warning now
+    compute the warning now, from the cavity fields only
     """
     for warning_idx in xrange(len(warnings)):
         warnings[warning_idx] = npr.randint(2, size=len(warnings[warning_idx]))
@@ -80,6 +83,10 @@ def warning_propagation(clauses,
     return False
 
 def warning_decimation(clauses, variables):
+###########################
+###########################
+###########################
+###########################
     pass
 
 if __name__ == "__main__":
