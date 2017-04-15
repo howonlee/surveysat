@@ -11,13 +11,46 @@ def initialize_warnings(clauses):
         warnings.append(npr.randint(2, size=len(clause)))
     return warnings
 
+def local_fields(warnings):
+################
+################
+################
+    pass
+
+def contradiction_numbers(warnings):
+################
+################
+################
+    pass
+
 def check_convergence(new_warnings, warnings):
     for warning_idx, warning in enumerate(warnings):
         if not np.allclose(warning, new_warnings[warning_idx]):
             return False
     return True
 
-def warning_update(clauses, variables, warnings):
+def clauses_to_variables(clauses, num_vars):
+    # 0 will be empty
+    variables = [[] for _ in xrange(num_vars+1)]
+    for clause_idx, clause in enumerate(clauses):
+        for member in clause:
+            if member > 0:
+                variables[member].append(clause_idx)
+            else:
+                variables[-member].append(-clause_idx)
+    return variables
+
+
+def warning_update(clauses, variables, warnings, num_warnings=40):
+    """
+    num_warnings is the number of warnings to impinge upon
+    """
+    """
+    compute the cavity field
+    """
+    """
+    compute the warning now
+    """
     for warning_idx in xrange(len(warnings)):
         warnings[warning_idx] = npr.randint(2, size=len(warnings[warning_idx]))
     return warnings
@@ -46,16 +79,8 @@ def warning_propagation(clauses,
         curr_warnings_2 = temp
     return False
 
-def clauses_to_variables(clauses, num_vars):
-    # 0 will be empty
-    variables = [[] for _ in xrange(num_vars+1)]
-    for clause_idx, clause in enumerate(clauses):
-        for member in clause:
-            if member > 0:
-                variables[member].append(clause_idx)
-            else:
-                variables[-member].append(-clause_idx)
-    return variables
+def warning_decimation(clauses, variables):
+    pass
 
 if __name__ == "__main__":
     assert len(sys.argv) == 2
