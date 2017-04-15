@@ -46,12 +46,13 @@ def warning_update(clauses, variables, warnings, num_warnings=40):
     num_warnings is the number of warnings to impinge upon
     """
     cavity_fields = []
+    # we _do_ need the reparameterization into variables
     for variable_idx, variable in enumerate(variables):
-        curr_cavity_field = NotImplementedError()
+        curr_cavity_field = NotImplementedError() #########
         cavity_fields.append(curr_cavity_field)
     for warning_idx in xrange(len(warnings)):
-        curr_warning = NotImplementedError()
-        warnings[warning_idx] = curr_warning
+        curr_warning = warnings[warning_idx]
+        ################ mutate inplace
     return warnings
 
 def warning_propagation(clauses,
