@@ -2,6 +2,7 @@ import sys
 import copy
 import numpy as np
 import numpy.random as npr
+import random
 
 """
 void randomformula(int K)
@@ -36,13 +37,13 @@ def generate_random_instance(num_clauses, num_variables, k):
         clauses[clause_idx]["literal"] = [{} for _ in xrange(k)]
         for curr_clause in xrange(k):
             while True:
-                randvar = random.randnint(1, N)
-                used = any(randvar == literal["var"] for literal in clauses[clause_idx]["literal"])
+                randvar = random.randint(1, num_variables)
+                used = any(randvar == literal.get("var", -1) for literal in clauses[clause_idx]["literal"])
                 if not used:
                     break
             clauses[clause_idx]["literal"][curr_clause]["var"] = randvar
-            clauses[clause_idx]["literal"][curr_clause]["bar"] = randint(2)
-            if not variables[randvar]["clauses"]:
+            clauses[clause_idx]["literal"][curr_clause]["bar"] = random.randint(0, 1)
+            if "clauses" not in variables[randvar]:
                 variables[randvar]["clauses"] = 0
             variables[randvar]["clauses"] += 1
             if variables[randvar]["clauses"] > max_num_conns:
@@ -50,5 +51,8 @@ def generate_random_instance(num_clauses, num_variables, k):
     return variables, clauses, max_num_conns
 
 if __name__ == "__main__":
-    num_clauses, num_variables, k = 4200, 1000, 3
-    generate_random_instance(num_clauses, num_variables, k)
+    num_clauses, num_variables, k = 42, 10, 3
+    variables, clauses, max_num_conns = generate_random_instance(num_clauses, num_variables, k)
+    print variables
+    print clauses
+    print max_num_conns
