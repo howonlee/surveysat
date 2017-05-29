@@ -37,8 +37,7 @@ def generate_random_instance(num_clauses, num_variables, k):
         for curr_clause in xrange(k):
             while True:
                 randvar = random.randnint(1, N)
-                # if(var==clause[i].literal[k].var) {
-                used = any(randvar == var for var in some shit) #########
+                used = any(randvar == literal["var"] for literal in clauses[clause_idx]["literal"])
                 if not used:
                     break
             clauses[clause_idx]["literal"][curr_clause]["var"] = randvar
