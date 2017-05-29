@@ -27,6 +27,7 @@ void randomformula(int K)
 """
 
 def generate_random_instance(num_clauses, num_variables, k):
+    assert num_variables >= k
     clause_categories = np.zeros(k+1)
     clause_categories[k] = num_clauses
     clauses, variables = [{} for _ in xrange(num_clauses)], [{} for _ in xrange(num_variables + 1)]
@@ -51,7 +52,12 @@ def generate_random_instance(num_clauses, num_variables, k):
     return variables, clauses, max_num_conns
 
 if __name__ == "__main__":
-    num_clauses, num_variables, k = 42, 10, 3
+    """
+    many things are 1-indexed here, and room left for the 1-indexing.
+    this is because it's a python port of a c port of a fortran original program
+    god is dead
+    """
+    num_clauses, num_variables, k = 12, 3, 3
     variables, clauses, max_num_conns = generate_random_instance(num_clauses, num_variables, k)
     print variables
     print clauses
