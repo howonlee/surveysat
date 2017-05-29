@@ -49,7 +49,23 @@ def generate_random_instance(num_clauses, num_variables, k):
             variables[randvar]["clauses"] += 1
             if variables[randvar]["clauses"] > max_num_conns:
                 max_num_conns = variables[randvar]["clauses"]
-    return variables, clauses, max_num_conns
+    for var_idx in xrange(1, num_variables+1):
+        if variables[var_idx].clauses:
+            pass
+            #     v[var].clauselist=allclauses;
+            #     allclauses+=v[var].clauses;
+            #     v[var].clauses=0;
+    for clause_idx in xrange(num_clauses):
+        for curr_clause in xrange(k):
+            pass
+            #     var=clause[i].literal[j].var;
+            #     v[var].clauselist[v[var].clauses].clause=clause+i;
+            #     v[var].clauselist[v[var].clauses++].lit=j;
+
+
+    max_literals = k
+    free_spin = num_variables
+    return variables, clauses, max_num_conns, max_literals, free_spin
 
 if __name__ == "__main__":
     """
