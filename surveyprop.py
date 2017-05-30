@@ -95,6 +95,9 @@ if __name__ == "__main__":
     """
     num_clauses, num_variables, k = 3, 3, 3
     variables, clauses, max_num_conns, max_literals, free_spin = generate_random_instance(num_clauses, num_variables, k)
-    print variables
+    print "==============="
     print clauses
+    print "==============="
+    print variables
+    print "==============="
     print max_num_conns
