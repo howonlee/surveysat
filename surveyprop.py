@@ -64,7 +64,8 @@ def generate_random_instance(num_clauses, num_variables, k):
     return variables, clauses, max_num_conns, max_literals, free_spin
 
 def randomize_eta():
-    pass
+    """ not needed in this impl yet, since we're only implementing random ksat"""
+    raise NotImplemented()
 
 def compute_pi():
     pass
