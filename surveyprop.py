@@ -11,6 +11,7 @@ global_state = {}
 sort of a port of the mezard et al collab's c implementation
 nontrivial changes, tho
 """
+
 def incr(parent, key):
     """ mutates """
     if key not in parent:
@@ -64,14 +65,53 @@ def generate_random_instance(num_clauses, num_variables, k):
             curr_var["clauses"] += 1
     return variables, clauses
 
-def fix(variables, var_idx, spin, freespin):
+def fix(variables, var_idx, spin):
+    global global_state
+    global_state["free_spin"] -= 1
     if variables[var_idx]["spin"]:
         return 1
     variables[var_idx]["spin"] = spin
-    return simplify(variables, var_idx), freespin
+    return simplify(variables, var_idx)
 
 def simplify(variables, var_idx):
-    pass
+    global global_state
+    # for(cl=0; cl<v[var].clauses; cl++) {
+    #     c=v[var].clauselist[cl].clause;
+    #     l=v[var].clauselist[cl].lit;
+    #     if(c->type==0) {
+    #         continue;
+    #     }
+    #     ncl[c->type]--;
+    #     //check if var renders SAT the clause
+    #     if(c->literal[l].bar==(v[var].spin==-1)) {
+    #         ncl[0]++;
+    #         c->type=0;
+    #        continue;
+
+    #     }
+    #     ncl[(--(c->type))]++;
+    #     //otherwise, check for further simplifications
+    #     //type 0, contradiction?:
+    #     if(c->type==0) {
+    #         printf("contradiction\n");
+    #         writeformula(fopen("contradiction.tmp.cnf","w+"));
+    #         exit(-1);
+    #     }
+    #     //no contradiction
+    #     //type 1: unit clause propagation
+    #     if(c->type == 1) {
+    #     //find the unfixed literal
+    #         for(i=0; i<c->lits; i++) {
+    #             if(v[aux=c->literal[i].var].spin==0)
+    #                 break;
+    #         }
+    #         if(i==c->lits)
+    #             continue;
+    #     //a clause could be unit-clause-fixed by two different paths
+    #         if(fix(aux,c->literal[i].bar?-1:1))
+    #             return -1;
+    #     }
+    return 0
 
 
 def randomize_eta():
