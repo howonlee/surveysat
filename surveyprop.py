@@ -9,10 +9,13 @@ sort of a port of the mezard et al collab's c implementation
 nontrivial changes, tho
 """
 
-def fix(variables, var_idx, spin):
-    pass
+def fix(variables, var_idx, spin, freespin):
+    if variables[var_idx]["spin"]:
+        return 1
+    variables[var_idx]["spin"] = spin
+    return simplify(variables, var_idx), freespin
 
-def simplify(var_idx):
+def simplify(variables, var_idx):
     pass
 
 def incr(parent, key):
