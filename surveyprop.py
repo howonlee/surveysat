@@ -5,20 +5,12 @@ import numpy.random as npr
 import random
 import pprint
 
+global_state = {}
+
 """
 sort of a port of the mezard et al collab's c implementation
 nontrivial changes, tho
 """
-
-def fix(variables, var_idx, spin, freespin):
-    if variables[var_idx]["spin"]:
-        return 1
-    variables[var_idx]["spin"] = spin
-    return simplify(variables, var_idx), freespin
-
-def simplify(variables, var_idx):
-    pass
-
 def incr(parent, key):
     """ mutates """
     if key not in parent:
@@ -31,10 +23,13 @@ def generate_random_instance(num_clauses, num_variables, k):
     go painstakingly line by line and assure self of correctness of generated one
     """
     assert num_variables >= k
-    clause_categories = [0 for _ in xrange(k+1)]
-    clause_categories[k] = num_clauses
+    global global_state
+    global_state["clause_categories"] = [0 for _ in xrange(k+1)]
+    global_state["clause_categories"][k] = num_clauses
+    global_state["max_literals"] = k
+    global_state["free_spin"] = num_variables
     clauses, variables = [{} for _ in xrange(num_clauses)], [{} for _ in xrange(num_variables + 1)]
-    max_num_conns = 0
+    global_state["max_num_conns"] = 0
     """ make clause datastruct """
     for clause_idx in xrange(num_clauses):
         clauses[clause_idx]["type"] = k
@@ -50,8 +45,8 @@ def generate_random_instance(num_clauses, num_variables, k):
             clauses[clause_idx]["literal"][curr_lit]["bar"] = random.randint(0, 1)
             clauses[clause_idx]["literal"][curr_lit]["eta"] = random.random()
             incr(variables[randvar], "clauses")
-            if variables[randvar]["clauses"] > max_num_conns:
-                max_num_conns = variables[randvar]["clauses"]
+            if variables[randvar]["clauses"] > global_state["max_num_conns"]:
+                global_state["max_num_conns"] = variables[randvar]["clauses"]
     """ count up var datastruct """
     for var_idx in xrange(1, num_variables+1):
         variables[var_idx]["spin"] = 0
@@ -67,9 +62,17 @@ def generate_random_instance(num_clauses, num_variables, k):
             curr_var["clauselist"][curr_var["clauses"]]["clause"] = clauses[clause_idx]
             curr_var["clauselist"][curr_var["clauses"]]["lit"] = curr_lit
             curr_var["clauses"] += 1
-    max_literals = k
-    free_spin = num_variables
-    return variables, clauses, max_num_conns, max_literals, free_spin
+    return variables, clauses
+
+def fix(variables, var_idx, spin, freespin):
+    if variables[var_idx]["spin"]:
+        return 1
+    variables[var_idx]["spin"] = spin
+    return simplify(variables, var_idx), freespin
+
+def simplify(variables, var_idx):
+    pass
+
 
 def randomize_eta():
     """ not needed in this impl yet, since we're only implementing random ksat"""
@@ -106,11 +109,11 @@ if __name__ == "__main__":
     god is dead
     """
     num_clauses, num_variables, k = 6, 4, 3
-    variables, clauses, max_num_conns, max_literals, free_spin = generate_random_instance(num_clauses, num_variables, k)
+    variables, clauses = generate_random_instance(num_clauses, num_variables, k)
     pp = pprint.PrettyPrinter(indent=2)
-    print "==============="
-    pp.pprint(clauses)
-    print "==============="
-    pp.pprint(variables)
-    print "==============="
-    print max_num_conns
+    # print "==============="
+    # pp.pprint(clauses)
+    # print "==============="
+    # pp.pprint(variables)
+    # print "==============="
+    # print max_num_conns
