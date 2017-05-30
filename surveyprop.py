@@ -57,13 +57,13 @@ def generate_random_instance(num_clauses, num_variables, k):
                 max_num_conns = variables[randvar]["clauses"]
     for var_idx in xrange(1, num_variables+1):
         if variables[var_idx]["clauses"]:
-            variables[var_idx]["clauselist"] = [0 for _ in xrange(variables[var_idx].clauses)]
+            variables[var_idx]["clauselist"] = [{} for _ in xrange(variables[var_idx]["clauses"])]
             variables[var_idx]["clauses"] = 0
     for clause_idx in xrange(num_clauses):
         for curr_clause in xrange(k):
             #     var=clause[i].literal[j].var;
             curr_var_idx = clauses[clause_idx]["literal"][curr_clause]["var"]
-            curr_var = variables[curr_var]
+            curr_var = variables[curr_var_idx]
             if "clause" not in curr_var["clauselist"][curr_var["clauses"]]:
                 curr_var["clauselist"][curr_var["clauses"]]["clause"] = 0
             curr_var["clauselist"][curr_var["clauses"]]["clause"] += 1
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     god is dead
     """
     num_clauses, num_variables, k = 12, 3, 3
-    variables, clauses, max_num_conns = generate_random_instance(num_clauses, num_variables, k)
+    variables, clauses, max_num_conns, max_literals, free_spin = generate_random_instance(num_clauses, num_variables, k)
     print variables
     print clauses
     print max_num_conns
