@@ -9,7 +9,7 @@ sort of a port of the mezard et al collab's c implementation
 nontrivial changes, tho
 """
 
-def fix(var_idx, spin):
+def fix(variables, var_idx, spin):
     pass
 
 def simplify(var_idx):
@@ -40,11 +40,14 @@ def generate_random_instance(num_clauses, num_variables, k):
                     break
             clauses[clause_idx]["literal"][curr_lit]["var"] = randvar
             clauses[clause_idx]["literal"][curr_lit]["bar"] = random.randint(0, 1)
+            clauses[clause_idx]["literal"][curr_lit]["eta"] = random.random()
             incr(variables[randvar], "clauses")
             if variables[randvar]["clauses"] > max_num_conns:
                 max_num_conns = variables[randvar]["clauses"]
     """ count up var datastruct """
     for var_idx in xrange(1, num_variables+1):
+        variables[var_idx]["spin"] = 0
+        variables[var_idx]["pi"] = {"p": 0, "m": 0}
         if variables[var_idx]["clauses"]:
             variables[var_idx]["clauselist"] = [{} for _ in xrange(variables[var_idx]["clauses"])]
             variables[var_idx]["clauses"] = 0
