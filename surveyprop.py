@@ -3,6 +3,7 @@ import copy
 import numpy as np
 import numpy.random as npr
 import random
+import pprint
 
 """
 sort of a port of the mezard et al collab's c implementation
@@ -25,6 +26,10 @@ def incr(parent, key):
     parent[key] += 1
 
 def generate_random_instance(num_clauses, num_variables, k):
+    """
+    I am still not sure about this fucking thing
+    go painstakingly line by line and assure self of correctness of generated one
+    """
     assert num_variables >= k
     clause_categories = [0 for _ in xrange(k+1)]
     clause_categories[k] = num_clauses
@@ -100,11 +105,12 @@ if __name__ == "__main__":
     this is because it's a python port of a c port of a fortran original program
     god is dead
     """
-    num_clauses, num_variables, k = 3, 3, 3
+    num_clauses, num_variables, k = 6, 4, 3
     variables, clauses, max_num_conns, max_literals, free_spin = generate_random_instance(num_clauses, num_variables, k)
+    pp = pprint.PrettyPrinter(indent=2)
     print "==============="
-    print clauses
+    pp.pprint(clauses)
     print "==============="
-    print variables
+    pp.pprint(variables)
     print "==============="
     print max_num_conns
