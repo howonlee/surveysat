@@ -26,6 +26,12 @@ void randomformula(int K)
 
 """
 
+def fix(var_idx, spin):
+    pass
+
+def simplify(var_idx):
+    pass
+
 def generate_random_instance(num_clauses, num_variables, k):
     assert num_variables >= k
     clause_categories = np.zeros(k+1)
@@ -66,6 +72,33 @@ def generate_random_instance(num_clauses, num_variables, k):
     max_literals = k
     free_spin = num_variables
     return variables, clauses, max_num_conns, max_literals, free_spin
+
+def randomize_eta():
+    pass
+
+def compute_pi():
+    pass
+
+def update_eta(clause_idx):
+    pass
+
+def compute_field(var_idx):
+    pass
+
+def fix_balanced():
+    pass
+
+def fix_chunk(num_chunks):
+    pass
+
+def iterate():
+    pass
+
+def compute_sigma():
+    pass
+
+def sequential_converge():
+    pass
 
 if __name__ == "__main__":
     """
