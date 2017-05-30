@@ -5,25 +5,8 @@ import numpy.random as npr
 import random
 
 """
-void randomformula(int K)
-//random k-sat formula
-{
-    for(var=1; var<=N; var++) if(v[var].clauses){
-        v[var].clauselist=allclauses;
-        allclauses+=v[var].clauses;
-        v[var].clauses=0;
-    }
-    for(i=0; i<M; i++) {
-        for(j=0; j<K; j++) {
-            var=clause[i].literal[j].var;
-            v[var].clauselist[v[var].clauses].clause=clause+i;
-            v[var].clauselist[v[var].clauses++].lit=j;
-        }
-    }
-    maxlit=K;
-    freespin=N;
-}
-
+sort of a port of the mezard et al collab's c implementation
+nontrivial changes, tho
 """
 
 def fix(var_idx, spin):
@@ -61,7 +44,6 @@ def generate_random_instance(num_clauses, num_variables, k):
             variables[var_idx]["clauses"] = 0
     for clause_idx in xrange(num_clauses):
         for curr_clause in xrange(k):
-            #     var=clause[i].literal[j].var;
             curr_var_idx = clauses[clause_idx]["literal"][curr_clause]["var"]
             curr_var = variables[curr_var_idx]
             if "clause" not in curr_var["clauselist"][curr_var["clauses"]]:
@@ -69,8 +51,6 @@ def generate_random_instance(num_clauses, num_variables, k):
             curr_var["clauselist"][curr_var["clauses"]]["clause"] += 1
             curr_var["clauselist"][curr_var["clauses"]]["lit"] = curr_clause
             curr_var["clauses"] += 1
-
-
     max_literals = k
     free_spin = num_variables
     return variables, clauses, max_num_conns, max_literals, free_spin
@@ -108,7 +88,7 @@ if __name__ == "__main__":
     this is because it's a python port of a c port of a fortran original program
     god is dead
     """
-    num_clauses, num_variables, k = 12, 3, 3
+    num_clauses, num_variables, k = 3, 3, 3
     variables, clauses, max_num_conns, max_literals, free_spin = generate_random_instance(num_clauses, num_variables, k)
     print variables
     print clauses
