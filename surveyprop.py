@@ -53,7 +53,7 @@ def generate_random_instance(num_clauses, num_variables, k):
         for curr_lit in xrange(k):
             curr_var_idx = clauses[clause_idx]["literal"][curr_lit]["var"]
             curr_var = variables[curr_var_idx]
-            incr(curr_var["clauselist"][curr_var["clauses"]], "clauses")
+            curr_var["clauselist"][curr_var["clauses"]]["clause"] = clauses[clause_idx]
             curr_var["clauselist"][curr_var["clauses"]]["lit"] = curr_lit
             curr_var["clauses"] += 1
     max_literals = k
