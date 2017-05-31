@@ -125,12 +125,17 @@ def compute_pi():
     """ mutates """
     global variables
     for curr_var in variables[1:]:
-        curr_var["pi"]["p"] = 1
-        curr_var["pi"]["m"] = 1
-        for curr_clause in curr_var["clauselist"]:
-            pass
-            # if curr_clause["type"]
-                # some shenanigans with the bars and things
+        if curr_var["spin"] == 0:
+            curr_var["pi"]["p"] = 1
+            curr_var["pi"]["m"] = 1
+            for curr_clause in curr_var["clauselist"]:
+                if curr_clause["clause"]["type"]:
+                    ##### curr_literal = curr_clause["clause"]["literals"]
+                    raise NotImplementedError()
+                    if curr_literal["bar"]:
+                        curr_var["pi"]["p"] *= 1 - curr_literal["eta"]
+                    else:
+                        curr_var["pi"]["m"] *= 1 - curr_literal["eta"]
 
 def update_eta(clause_idx):
     global variables, clauses, prods, global_state
