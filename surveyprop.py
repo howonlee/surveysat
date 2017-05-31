@@ -121,10 +121,57 @@ def randomize_eta():
     raise NotImplemented()
 
 def compute_pi():
-    pass
+    """ mutates """
+    global variables
+    for curr_var in variables[1:]:
+        curr_var["pi"]["p"] = 1
+        curr_var["pi"]["m"] = 1
+        for curr_clause in curr_var["clauselist"]:
+            pass
+            # if curr_clause["type"]
+                # some shenanigans with the bars and things
 
 def update_eta(clause_idx):
-    pass
+    global clauses
+    curr_clause = clauses[clause_idx]
+    return 0
+    # for(i=0,l=c->literal; i<c->lits; i++,l++) if(v[l->var].spin==0) {
+    #     pi=&(v[l->var].pi);
+    #     if(l->bar) {
+    #         wt=pi->m;
+    #         wn=pi->p/(1-l->eta)*(1-wt*norho);
+    #     } else {
+    #         wt=pi->p;
+    #         wn=pi->m/(1-l->eta)*(1-wt*norho);
+    #     }
+    #     prod[i]=wn/(wn+wt);
+    #     if(prod[i]<EPS) {
+    #         if(++zeroes == 2)
+    #             break;
+    #     } else {
+    #         allprod*=prod[i];
+    #     }
+    # }
+    # eps=0;
+    # for(i=0,l=c->literal; i<c->lits; i++,l++) if(v[l->var].spin==0) {
+    #     if(!zeroes){
+    #         neweta=allprod/prod[i];
+    #     } else if (zeroes==1 && prod[i]<EPS) {
+    #         neweta=allprod;
+    #     } else {
+    #         neweta=0;
+    #     }
+
+    #     pi=&(v[l->var].pi);
+    #     if(l->bar) {
+    #         pi->p*=(1-neweta)/(1-l->eta);
+    #     } else {
+    #         pi->m*=(1-neweta)/(1-l->eta);
+    #     }
+    #     if(eps<fabs(l->eta-neweta))
+    #         eps=fabs(fabs(l->eta-neweta));
+    #     l->eta=neweta;
+    # }
 
 def compute_field(var_idx):
     pass
