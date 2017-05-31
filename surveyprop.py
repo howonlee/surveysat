@@ -193,13 +193,33 @@ def fix_chunk(num_chunks):
     pass
 
 def iterate():
-    pass
+    # int cl,vi=0,quant,i;
+
+    # double eps,maxeps;
+    # eps=0;
+    # maxeps=0;
+    # for(quant=M-ncl[0];quant;--quant) {
+    #     cl=perm[i=randint(quant)];
+    #     perm[i]=perm[quant-1];
+    #     perm[quant-1]=cl;
+    #     eps=update_eta(cl);
+    #     if(eps>epsilon) {
+    #         vi++;
+    #     }
+    #     if(eps>maxeps) {
+    #         maxeps=eps;
+    #     }
+    # }
+    # return maxeps;
+    raise NotImplemented()
 
 def compute_sigma():
     pass
 
-def sequential_converge():
-    pass
+def sequential_converge(num_iters):
+    compute_pi()
+    for idx in xrange(num_iters):
+        iterate()
 
 if __name__ == "__main__":
     """
@@ -209,10 +229,7 @@ if __name__ == "__main__":
     """
     num_clauses, num_variables, k = 6, 4, 3
     generate_random_instance(num_clauses, num_variables, k)
+    sequential_converge(5000)
     pp = pprint.PrettyPrinter(indent=2)
-    # print "==============="
-    # pp.pprint(clauses)
-    # print "==============="
-    # pp.pprint(variables)
-    # print "==============="
-    # print max_num_conns
+    print "==============="
+    pp.pprint(clauses) # eventually just print etas?
