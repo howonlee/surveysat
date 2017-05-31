@@ -8,6 +8,7 @@ import pprint
 global_state = {}
 variables = None
 clauses = None
+prods = None
 
 """
 sort of a port of the mezard et al collab's c implementation
@@ -132,46 +133,50 @@ def compute_pi():
                 # some shenanigans with the bars and things
 
 def update_eta(clause_idx):
-    global clauses
+    global variables, clauses, prods, global_state
+    if not prods:
+        prods = [0 for _ in xrange(global_state["max_literals"])]
     curr_clause = clauses[clause_idx]
-    return 0
-    # for(i=0,l=c->literal; i<c->lits; i++,l++) if(v[l->var].spin==0) {
-    #     pi=&(v[l->var].pi);
-    #     if(l->bar) {
-    #         wt=pi->m;
-    #         wn=pi->p/(1-l->eta)*(1-wt*norho);
-    #     } else {
-    #         wt=pi->p;
-    #         wn=pi->m/(1-l->eta)*(1-wt*norho);
-    #     }
-    #     prod[i]=wn/(wn+wt);
-    #     if(prod[i]<EPS) {
-    #         if(++zeroes == 2)
-    #             break;
-    #     } else {
-    #         allprod*=prod[i];
-    #     }
-    # }
-    # eps=0;
-    # for(i=0,l=c->literal; i<c->lits; i++,l++) if(v[l->var].spin==0) {
-    #     if(!zeroes){
-    #         neweta=allprod/prod[i];
-    #     } else if (zeroes==1 && prod[i]<EPS) {
-    #         neweta=allprod;
-    #     } else {
-    #         neweta=0;
-    #     }
+    zeroes = 0
+    norho = 1
+    allprod = 1.0
+    for idx, curr_literal in enumerate(curr_clause["literal"]):
+        if variables[curr_literal["var"]]["spin"] == 0:
+            pi = variables[curr_literal["var"]]["pi"]
+            if curr_literal["bar"]:
+                w_t = pi["m"]
+                w_n = pi["p"] / ((1.0 - curr_literal["eta"]) * (1.0 - (w_t * norho)))
+            else:
+                w_t = pi["p"]
+                w_n = pi["m"] / ((1.0 - curr_literal["eta"]) * (1.0 - (w_t * norho)))
+            prods[idx] = w_n / (w_n + w_t)
+            if prods[idx] < 1e-16:
+                zeroes += 1
+                if zeroes == 2:
+                    break
+            else:
+                allprod *= prods[i]
+    eps = 0
+    for idx, curr_literal in enumerate(curr_clause["literal"]):
+        if variables[curr_literal["var"]]["spin"] == 0:
+            if not zeroes:
+                new_eta = allprod / prod[idx]
+            elif zeroes == 1 and prod[idx] < 1e-16:
+                new_eta = allprod
+            else:
+                new_eta = 0.0
 
-    #     pi=&(v[l->var].pi);
-    #     if(l->bar) {
-    #         pi->p*=(1-neweta)/(1-l->eta);
-    #     } else {
-    #         pi->m*=(1-neweta)/(1-l->eta);
-    #     }
-    #     if(eps<fabs(l->eta-neweta))
-    #         eps=fabs(fabs(l->eta-neweta));
-    #     l->eta=neweta;
-    # }
+            pi = variables[curr_literal["var"]]["pi"]
+            if curr_liberal["bar"]:
+                pi["p"] = (1.0 - new_eta) / (1.0 - curr_literal["eta"])
+            else:
+                pi["m"] = (1.0 - new_eta) / (1.0 - curr_literal["eta"])
+
+            if eps < np.abs(curr_literal - new_eta):
+                eps = np.abs(curr_literal - new_eta)
+
+            curr_literal["eta"] = new_eta
+    return eps
 
 def compute_field(var_idx):
     pass
