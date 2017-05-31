@@ -6,6 +6,8 @@ import random
 import pprint
 
 global_state = {}
+variables = None
+clauses = None
 
 """
 sort of a port of the mezard et al collab's c implementation
@@ -24,7 +26,7 @@ def generate_random_instance(num_clauses, num_variables, k):
     go painstakingly line by line and assure self of correctness of generated one
     """
     assert num_variables >= k
-    global global_state
+    global global_state, clauses, variables
     global_state["clause_categories"] = [0 for _ in xrange(k+1)]
     global_state["clause_categories"][k] = num_clauses
     global_state["max_literals"] = k
@@ -149,7 +151,7 @@ if __name__ == "__main__":
     god is dead
     """
     num_clauses, num_variables, k = 6, 4, 3
-    variables, clauses = generate_random_instance(num_clauses, num_variables, k)
+    generate_random_instance(num_clauses, num_variables, k)
     pp = pprint.PrettyPrinter(indent=2)
     # print "==============="
     # pp.pprint(clauses)
