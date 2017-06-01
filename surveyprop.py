@@ -142,7 +142,7 @@ def update_eta(clause_idx):
         prods = [0 for _ in xrange(global_state["max_literals"])]
     curr_clause = clauses[clause_idx]
     zeroes = 0
-    norho = 1
+    norho = 0.99
     allprod = 1.0
     for idx, curr_literal in enumerate(curr_clause["literal"]):
         if variables[curr_literal["var"]]["spin"] == 0:
@@ -171,13 +171,13 @@ def update_eta(clause_idx):
                 new_eta = 0.0
 
             pi = variables[curr_literal["var"]]["pi"]
-            if curr_liberal["bar"]:
+            if curr_literal["bar"]:
                 pi["p"] = (1.0 - new_eta) / (1.0 - curr_literal["eta"])
             else:
                 pi["m"] = (1.0 - new_eta) / (1.0 - curr_literal["eta"])
 
-            if eps < np.abs(curr_literal - new_eta):
-                eps = np.abs(curr_literal - new_eta)
+            if eps < np.abs(curr_literal["eta"] - new_eta):
+                eps = np.abs(curr_literal["eta"] - new_eta)
 
             curr_literal["eta"] = new_eta
     return eps
@@ -209,7 +209,7 @@ if __name__ == "__main__":
     this is because it's a python port of a c port of a fortran original program
     god is dead
     """
-    num_clauses, num_variables, k = 6, 4, 3
+    num_clauses, num_variables, k = 200, 40, 3
     generate_random_instance(num_clauses, num_variables, k)
     sequential_converge(5000)
     pp = pprint.PrettyPrinter(indent=2)
