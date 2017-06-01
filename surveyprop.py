@@ -213,7 +213,7 @@ if __name__ == "__main__":
     this is because it's a python port of a c port of a fortran original program
     god is dead
     """
-    num_clauses, num_variables, k = 2000, 400, 3
+    num_clauses, num_variables, k = 1000, 400, 3
     generate_random_instance(num_clauses, num_variables, k)
     sequential_converge(5000)
     pp = pprint.PrettyPrinter(indent=2)
