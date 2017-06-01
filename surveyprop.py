@@ -130,8 +130,7 @@ def compute_pi():
             curr_var["pi"]["m"] = 1
             for curr_clause in curr_var["clauselist"]:
                 if curr_clause["clause"]["type"]:
-                    ##### curr_literal = curr_clause["clause"]["literals"]
-                    raise NotImplementedError()
+                    curr_literal = curr_clause["clause"]["literal"][curr_clause["lit"]]
                     if curr_literal["bar"]:
                         curr_var["pi"]["p"] *= 1 - curr_literal["eta"]
                     else:
@@ -160,13 +159,13 @@ def update_eta(clause_idx):
                 if zeroes == 2:
                     break
             else:
-                allprod *= prods[i]
+                allprod *= prods[idx]
     eps = 0
     for idx, curr_literal in enumerate(curr_clause["literal"]):
         if variables[curr_literal["var"]]["spin"] == 0:
             if not zeroes:
-                new_eta = allprod / prod[idx]
-            elif zeroes == 1 and prod[idx] < 1e-16:
+                new_eta = allprod / prods[idx]
+            elif zeroes == 1 and prods[idx] < 1e-16:
                 new_eta = allprod
             else:
                 new_eta = 0.0
@@ -198,10 +197,11 @@ def compute_sigma():
 def sequential_converge(num_iters):
     global clauses
     compute_pi()
+    idxs = range(len(clauses))
     for idx in xrange(num_iters):
         """ iterate() now folded into here: """
-        curr_clause = random.choice(clauses)
-        update_eta(curr_clause)
+        curr_clause_idx = random.choice(idxs)
+        update_eta(curr_clause_idx)
 
 if __name__ == "__main__":
     """
