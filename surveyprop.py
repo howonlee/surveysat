@@ -192,34 +192,16 @@ def fix_balanced():
 def fix_chunk(num_chunks):
     pass
 
-def iterate():
-    # int cl,vi=0,quant,i;
-
-    # double eps,maxeps;
-    # eps=0;
-    # maxeps=0;
-    # for(quant=M-ncl[0];quant;--quant) {
-    #     cl=perm[i=randint(quant)];
-    #     perm[i]=perm[quant-1];
-    #     perm[quant-1]=cl;
-    #     eps=update_eta(cl);
-    #     if(eps>epsilon) {
-    #         vi++;
-    #     }
-    #     if(eps>maxeps) {
-    #         maxeps=eps;
-    #     }
-    # }
-    # return maxeps;
-    raise NotImplemented()
-
 def compute_sigma():
     pass
 
 def sequential_converge(num_iters):
+    global clauses
     compute_pi()
     for idx in xrange(num_iters):
-        iterate()
+        """ iterate() now folded into here: """
+        curr_clause = random.choice(clauses)
+        update_eta(curr_clause)
 
 if __name__ == "__main__":
     """
