@@ -149,9 +149,13 @@ def update_eta(clause_idx):
             pi = variables[curr_literal["var"]]["pi"]
             if curr_literal["bar"]:
                 w_t = pi["m"]
+                # if idx == 2:
+                #     print curr_literal["eta"]
                 w_n = pi["p"] / ((1.0 - curr_literal["eta"]) * (1.0 - (w_t * norho)))
             else:
                 w_t = pi["p"]
+                # if idx == 2:
+                #     print curr_literal["eta"]
                 w_n = pi["m"] / ((1.0 - curr_literal["eta"]) * (1.0 - (w_t * norho)))
             prods[idx] = w_n / (w_n + w_t)
             if prods[idx] < 1e-16:
@@ -209,9 +213,12 @@ if __name__ == "__main__":
     this is because it's a python port of a c port of a fortran original program
     god is dead
     """
-    num_clauses, num_variables, k = 200, 40, 3
+    num_clauses, num_variables, k = 2000, 400, 3
     generate_random_instance(num_clauses, num_variables, k)
     sequential_converge(5000)
     pp = pprint.PrettyPrinter(indent=2)
     print "==============="
-    pp.pprint(clauses) # eventually just print etas?
+    for clause in clauses:
+        for literal in clause["literal"]:
+            print literal["eta"]
+    # pp.pprint(clauses) # eventually just print etas?
