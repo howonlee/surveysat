@@ -55,7 +55,7 @@ def generate_random_instance(num_clauses, num_variables, k):
     for var_idx in xrange(1, num_variables+1):
         variables[var_idx]["spin"] = 0
         variables[var_idx]["pi"] = {"p": 0, "m": 0}
-        if variables[var_idx]["clauses"]:
+        if "clauses" in variables[var_idx]:
             variables[var_idx]["clauselist"] = [{} for _ in xrange(variables[var_idx]["clauses"])]
             variables[var_idx]["clauses"] = 0
     """ fill up var datastruct """
